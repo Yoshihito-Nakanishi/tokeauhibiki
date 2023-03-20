@@ -8,7 +8,6 @@ var mic, recorder, player;
 function setup() {
     createCanvas(windowWidth, windowHeight);
 
-
     if (/iPhone|iPad|/i.test(navigator.userAgent)) {
         // is mobile..
         console.log("is iOS")
@@ -51,7 +50,7 @@ function draw() {
     cx += dx;
     cy += dy;
   
-    ellipse(cx, cy, 50, 50);
+    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
 }
 
 function requestAccess() {
@@ -67,16 +66,37 @@ function requestAccess() {
     this.remove();
   }
   
+
   function deviceMoved(){
-    
+    console.log("moved");
+    if(player == "undefined")return;
+    if (player.state != "started"){
+        player.start();
+    }
   }
   
   function deviceTurned(){
-    
+      console.log("turned");
+      if(player == "undefined")return;
+      if (player.state != "started"){
+          player.start();
+      }
   }
   
   function deviceShaken(){
-    
+      console.log("shaked");
+      if(player == "undefined")return;
+      if (player.state != "started"){
+          player.start();
+      }
+  }
+  
+  function deviceCollided(){
+      console.log("collide")
+      if(player == "undefined")return;
+      if (player.state != "started"){
+          player.start();
+      }
   }
 
 // bind the interface
