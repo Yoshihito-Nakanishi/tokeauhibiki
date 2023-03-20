@@ -6,7 +6,7 @@ initialized = false;
 var mic, recorder, player;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(displayWidth, displayHeight);
 
     if (/iPhone|iPad|/i.test(navigator.userAgent)) {
         // is mobile..
@@ -40,6 +40,9 @@ function setup() {
         textSize(48);
         permissionGranted = true;
     }
+
+    setMoveThreshold(1);
+    setShakeThreshold(30);
 }
 
 function draw() {
