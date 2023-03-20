@@ -66,7 +66,7 @@ function setup() {
     setShakeThreshold(30);
  
     sensorSelect = createSelect();
-    sensorSelect.position(120, 85);
+    sensorSelect.position(120, 125);
     sensorSelect.option('揺れた');
     sensorSelect.option('振られた');
     sensorSelect.option('ひっくり返った');
@@ -75,7 +75,7 @@ function setup() {
     sensorSelect.changed(sensoorSelectEvent);
 
     effectSelect = createSelect();
-    effectSelect.position(120, 105);
+    effectSelect.position(120, 147.5);
     effectSelect.option('なし');
     effectSelect.option('お風呂場');
     effectSelect.option('やまびこ');
@@ -93,7 +93,7 @@ function draw() {
 
     textSize(12);
     fill(255);
-    text("音の効果", 5, 40);
+    text("音の効果", 5, 45);
     const dx = constrain(rotationY, -3, 3);
     const dy = constrain(rotationX, -3, 3);
     cx = dx;
@@ -212,10 +212,10 @@ recBtn.addEventListener("click", async () => {
         player = new Tone.Player(blobUrl, () => {
             playBtn.disabled = false;
         }).toDestination();
-        recBtn.innerHTML = '<img src="assets/rec.png" height ="60" width="60" />';
+        recBtn.innerHTML = '<img src="assets/rec.png" height ="100" width="100" />';
     } else {
         recorder.start();
-        recBtn.innerHTML = '<img src="assets/recstop.png" height ="60" width="60" />';
+        recBtn.innerHTML = '<img src="assets/recstop.png" height ="100" width="100" />';
     }
 });
 
@@ -223,9 +223,9 @@ recBtn.addEventListener("click", async () => {
 playBtn.addEventListener("click", () => {
     if (player.state == "started") {
         player.stop();
-        playBtn.innerHTML = '<img src="assets/play.png" height ="60" width="60" />';
+        playBtn.innerHTML = '<img src="assets/play.png" height ="100" width="100" />';
     } else {
         player.start();
-        playBtn.innerHTML = '<img src="assets/playstop.png" height ="60" width="60" />';
+        playBtn.innerHTML = '<img src="assets/playstop.png" height ="100" width="100" />';
     }
 });
