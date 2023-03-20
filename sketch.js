@@ -9,7 +9,9 @@ var mic, recorder, player;
 var Sensor = {
     move : 0,
     shake : 1,
-    turn : 2
+    turn : 2,
+    collide: 3,
+    loop : 4
 };
 
 var Effect = {
@@ -62,24 +64,21 @@ function setup() {
 
     setMoveThreshold(1);
     setShakeThreshold(30);
-
-    // let recButton = createButton("record");
-    // recButton.style("font-size", "18px");
-    // recButton.center();
-    // recButton.mousePressed(recBtn);
  
     sensorSelect = createSelect();
-    sensorSelect.position(120, 40);
-    sensorSelect.option('move');
-    sensorSelect.option('shake');
-    sensorSelect.option('turn');
+    sensorSelect.position(120, 85);
+    sensorSelect.option('揺れた');
+    sensorSelect.option('振られた');
+    sensorSelect.option('ひっくり返った');
+    sensorSelect.option('ぶつかった');
+    sensorSelect.option('ループ再生');
     sensorSelect.changed(sensoorSelectEvent);
 
     effectSelect = createSelect();
-    effectSelect.position(120, 60);
-    effectSelect.option('non');
-    effectSelect.option('reverb');
-    effectSelect.option('delay');
+    effectSelect.position(120, 105);
+    effectSelect.option('なし');
+    effectSelect.option('お風呂場');
+    effectSelect.option('やまびこ');
     effectSelect.changed(effectSelectEvent);
 
 }
@@ -89,31 +88,32 @@ function draw() {
     if (!permissionGranted) return;
 
     textSize(12);
-    fill(0);
+    fill(255);
     text("再生のタイミング", 5, 21);
 
     textSize(12);
-    fill(0);
+    fill(255);
     text("音の効果", 5, 40);
-    // const dx = constrain(rotationY, -3, 3);
-    // const dy = constrain(rotationX, -3, 3);
-    // cx += dx;
-    // cy += dy;
-  
-    // ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
-
-
+    const dx = constrain(rotationY, -3, 3);
+    const dy = constrain(rotationX, -3, 3);
+    cx = dx;
+    cy = dy;
+    noStroke()
+    fill(0, 0, 255)
+    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 15, 15);
 }
 
 function sensoorSelectEvent() {
     let item = sensorSelect.value();
 
-    if(item == "move"){
+    if(item == "揺れた"){
         currentSensor = Sensor.move;
-    } else if (item == "shake") {
+    } else if (item == "振られた") {
         currentSensor = Sensor.shake;
-    } else if (item == "turn") {
+    } else if (item == "ひっくり返った") {
         currentSensor = Sensor.turn;
+    }　else if (item == "ループ再生") {
+        currentSensor = Sensor.loop;
     }
 
   }
@@ -122,12 +122,14 @@ function sensoorSelectEvent() {
 function effectSelectEvent() {
     let item = effectSelect.value();
 
-    if(item == "reverb"){
+    if(item == "お風呂場"){
         currentEffect = Effect.reverb;
-    } else if (item == "delay") {
+        player.connect(reverb);
+    } else if (item == "やまびこ") {
         currentEffect = Effect.reverb;
+        player.connect(delay);
     } else {
-
+        currentEffect = Effect.non;
     }
 
   }
@@ -204,27 +206,26 @@ recBtn.addEventListener("click", async () => {
         initialized = true;
     }
 
-    if (recBtn.innerText == "Stop") {
+    if (recorder.state == "started") {
         var data = await recorder.stop();
         var blobUrl = URL.createObjectURL(data);
         player = new Tone.Player(blobUrl, () => {
             playBtn.disabled = false;
         }).toDestination();
-        player.connect(reverb);
-        recBtn.innerText = "Record";
+        recBtn.innerHTML = '<img src="assets/rec.png" height ="60" width="60" />';
     } else {
         recorder.start();
-        recBtn.innerText = "Stop";
+        recBtn.innerHTML = '<img src="assets/recstop.png" height ="60" width="60" />';
     }
 });
 
 // Play / Stop
 playBtn.addEventListener("click", () => {
-    if (playBtn.innerText == "Stop") {
+    if (player.state == "started") {
         player.stop();
-        playBtn.innerText = "Play";
+        playBtn.innerHTML = '<img src="assets/play.png" height ="60" width="60" />';
     } else {
         player.start();
-        playBtn.innerText = "Stop";
+        playBtn.innerHTML = '<img src="assets/playstop.png" height ="60" width="60" />';
     }
 });
