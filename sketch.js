@@ -1,9 +1,28 @@
 console.clear();
 let permissionGranted = false;
 let cx, cy;
+let sensorSelect;
 
 initialized = false;
 var mic, recorder, player;
+
+var Sensor = {
+    move : 0,
+    shake : 1,
+    turn : 2
+};
+
+var Effect = {
+    non: 0,
+    reverb : 1,
+    delay : 2
+};
+
+var currentSensor = Sensor.shake;
+var currentEffect = Effect.non;
+
+const reverb = new Tone.Freeverb(0.8,500).toMaster();
+const delay = new Tone.Delay(0.1).toDestination();
 
 function setup() {
     createCanvas(displayWidth, displayHeight);
@@ -43,18 +62,75 @@ function setup() {
 
     setMoveThreshold(1);
     setShakeThreshold(30);
+
+    // let recButton = createButton("record");
+    // recButton.style("font-size", "18px");
+    // recButton.center();
+    // recButton.mousePressed(recBtn);
+ 
+    sensorSelect = createSelect();
+    sensorSelect.position(120, 40);
+    sensorSelect.option('move');
+    sensorSelect.option('shake');
+    sensorSelect.option('turn');
+    sensorSelect.changed(sensoorSelectEvent);
+
+    effectSelect = createSelect();
+    effectSelect.position(120, 60);
+    effectSelect.option('non');
+    effectSelect.option('reverb');
+    effectSelect.option('delay');
+    effectSelect.changed(effectSelectEvent);
+
 }
 
 function draw() {
-    background(200);
+
     if (!permissionGranted) return;
+
+    textSize(12);
+    fill(0);
+    text("再生のタイミング", 5, 21);
+
+    textSize(12);
+    fill(0);
+    text("音の効果", 5, 40);
     // const dx = constrain(rotationY, -3, 3);
     // const dy = constrain(rotationX, -3, 3);
     // cx += dx;
     // cy += dy;
   
     // ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
+
+
 }
+
+function sensoorSelectEvent() {
+    let item = sensorSelect.value();
+
+    if(item == "move"){
+        currentSensor = Sensor.move;
+    } else if (item == "shake") {
+        currentSensor = Sensor.shake;
+    } else if (item == "turn") {
+        currentSensor = Sensor.turn;
+    }
+
+  }
+
+
+function effectSelectEvent() {
+    let item = effectSelect.value();
+
+    if(item == "reverb"){
+        currentEffect = Effect.reverb;
+    } else if (item == "delay") {
+        currentEffect = Effect.reverb;
+    } else {
+
+    }
+
+  }
 
 function requestAccess() {
     DeviceOrientationEvent.requestPermission()
@@ -73,6 +149,8 @@ function requestAccess() {
   function deviceMoved(){
     console.log("moved");
     if(player == "undefined")return;
+    if(currentSensor == Sensor.move)return;
+
     if (player.state != "started"){
         player.start();
     }
@@ -81,6 +159,8 @@ function requestAccess() {
   function deviceTurned(){
       console.log("turned");
       if(player == "undefined")return;
+      if(currentSensor == Sensor.turn)return;
+
       if (player.state != "started"){
           player.start();
       }
@@ -89,6 +169,8 @@ function requestAccess() {
   function deviceShaken(){
       console.log("shaked");
       if(player == "undefined")return;
+      if(currentSensor == Sensor.shaked)return;
+
       if (player.state != "started"){
           player.start();
       }
@@ -105,7 +187,6 @@ function requestAccess() {
 // bind the interface
 const recBtn = document.getElementById("start_btn");
 const playBtn = document.getElementById("play_btn");
-const reverb = new Tone.Freeverb(0.8,500).toMaster();
 
 // Disable the rec button if UserMedia is not supported
 recBtn.disabled = !Tone.UserMedia.supported;
