@@ -45,12 +45,12 @@ function setup() {
 function draw() {
     background(200);
     if (!permissionGranted) return;
-    const dx = constrain(rotationY, -3, 3);
-    const dy = constrain(rotationX, -3, 3);
-    cx += dx;
-    cy += dy;
+    // const dx = constrain(rotationY, -3, 3);
+    // const dy = constrain(rotationX, -3, 3);
+    // cx += dx;
+    // cy += dy;
   
-    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
+    // ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
 }
 
 function requestAccess() {
@@ -91,17 +91,18 @@ function requestAccess() {
       }
   }
   
-  function deviceCollided(){
-      console.log("collide")
-      if(player == "undefined")return;
-      if (player.state != "started"){
-          player.start();
-      }
-  }
+//   function deviceCollided(){
+//       console.log("collide")
+//       if(player == "undefined")return;
+//       if (player.state != "started"){
+//           player.start();
+//       }
+//   }
 
 // bind the interface
 const recBtn = document.getElementById("start_btn");
 const playBtn = document.getElementById("play_btn");
+const reverb = new Tone.Freeverb(0.8,500).toMaster();
 
 // Disable the rec button if UserMedia is not supported
 recBtn.disabled = !Tone.UserMedia.supported;
@@ -125,6 +126,7 @@ recBtn.addEventListener("click", async () => {
         player = new Tone.Player(blobUrl, () => {
             playBtn.disabled = false;
         }).toDestination();
+        player.connect(reverb);
         recBtn.innerText = "Record";
     } else {
         recorder.start();
