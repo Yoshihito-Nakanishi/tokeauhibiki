@@ -14,6 +14,9 @@ var State = {
 var currentState = State.userPermission;
 
 function setup() {
+	getAudioContext().suspend();
+	  soundFormats('mp3', 'ogg');
+
     canvas = createCanvas(windowWidth, windowHeight);
 	
 		colorMode(HSB, 255);
@@ -31,7 +34,7 @@ function setup() {
   
 	// 空のp5.SoundFileオブジェクトを作成。録音した音の再生に使用する
     soundFile = new p5.SoundFile();
-	  getAudioContext().suspend();
+	  // getAudioContext().suspend();
  
 	// fftで解析
   fft = new p5.FFT(0.8, 128);
@@ -89,7 +92,7 @@ function touchStarted() {
             // マイクをレコーダーに接続
             recorder.setInput(mic);
             canvas.mousePressed(recordAndSave)
-					        currentState = State.waiting;
+					  currentState = State.waiting;
         });
         isUserStarted = true;
     }
@@ -103,8 +106,8 @@ function recordAndSave() {
         currentState = State.recording;
     }
     else if (currentState == State.recording) {
-        recorder.stop();
 			  fft.setInput(soundFile);
+        recorder.stop();
         currentState = State.recorded;
     }
     else if (currentState == State.recorded) {
@@ -115,3 +118,4 @@ function recordAndSave() {
         currentState = State.waiting;
     }
 }
+
