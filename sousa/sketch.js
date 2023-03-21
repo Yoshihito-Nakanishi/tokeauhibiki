@@ -47,6 +47,20 @@ function setup() {
 
 }
 
+function requestAccess() {
+    DeviceOrientationEvent.requestPermission()
+      .then((response) => {
+        if (response == "granted") {
+          permissionGranted = true;
+        } else {
+          permissionGranted = false;
+        }
+      })
+      .catch(console.error);
+    this.remove();
+  }
+  
+
 function draw() {
 
     if (!permissionGranted) return;
@@ -63,4 +77,8 @@ function draw() {
     osc.amp(map(cx, 0, displayHeight, 0.0, 1.0));
 
 
+}
+
+function touchStarted() {
+    userStartAudio();
 }
