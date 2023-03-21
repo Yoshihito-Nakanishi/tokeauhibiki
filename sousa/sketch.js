@@ -45,6 +45,8 @@ function setup() {
     sineWave = new p5.Oscillator('sine')
     sineWave.start();
 
+    getAudioContext().suspend();
+
 }
 
 function requestAccess() {
@@ -67,8 +69,10 @@ function draw() {
 
     const dx = constrain(rotationY, -3, 3);
     const dy = constrain(rotationX, -3, 3);
+    
     cx += dx;
     cy += dy;
+
     noStroke();
     fill(0, 0, 255);
     ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);

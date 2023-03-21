@@ -1,6 +1,5 @@
 console.clear();
 let permissionGranted = false;
-let cx, cy;
 let sensorSelect;
 
 initialized = false;
@@ -94,13 +93,6 @@ function draw() {
     textSize(12);
     fill(255);
     text("音の効果", 5, 45);
-    const dx = constrain(rotationY, -3, 3);
-    const dy = constrain(rotationX, -3, 3);
-    cx = dx;
-    cy = dy;
-    noStroke()
-    fill(0, 0, 255)
-    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 15, 15);
 }
 
 function sensoorSelectEvent() {
@@ -182,14 +174,6 @@ function requestAccess() {
           player.start();
       }
   }
-  
-//   function deviceCollided(){
-//       console.log("collide")
-//       if(player == "undefined")return;
-//       if (player.state != "started"){
-//           player.start();
-//       }
-//   }
 
 // bind the interface
 const recBtn = document.getElementById("start_btn");
