@@ -8,7 +8,7 @@ var sineWave;
 var soundfile;
 
 function preload(){
-    soundfile =loadSound("sousa/assets/kick.mp3");
+    soundfile =loadSound("assets/kick.mp3");
 }
 
 function setup() {
