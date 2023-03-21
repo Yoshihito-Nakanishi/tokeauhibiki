@@ -69,7 +69,7 @@ function draw() {
 
     const dx = constrain(rotationY, -3, 3);
     const dy = constrain(rotationX, -3, 3);
-    
+
     cx += dx;
     cy += dy;
 
@@ -77,8 +77,8 @@ function draw() {
     fill(0, 0, 255);
     ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
 
-    osc.freq(map(cx, 0, displayWidth, 0, 1000));
-    osc.amp(map(cx, 0, displayHeight, 0.0, 1.0));
+    sineWave.freq(map(cx, 0, displayWidth, 0, 1000));
+    sineWave.amp(map(cx, 0, displayHeight, 0.0, 1.0));
 
 
 }
