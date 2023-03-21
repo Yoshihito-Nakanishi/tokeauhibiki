@@ -1,5 +1,5 @@
 console.clear();
-let permissionGranted = false;
+// let permissionGranted = false;
 initialized = false;
 var mic, recorder, player;
 
@@ -17,45 +17,45 @@ function setup() {
     }
 
 
-    if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function"
-    ) {
-        DeviceOrientationEvent.requestPermission()
-            .catch(() => {
-                let button = createButton("click to allow access to sensors");
-                button.style("font-size", "24px");
-                button.center();
-                button.mousePressed(requestAccess);
-                throw error;
-            })
-            .then(() => {
-                permissionGranted = true;
-            });
-    } else {
-        textSize(48);
-        permissionGranted = true;
-    }
+    // if (
+    //     typeof DeviceOrientationEvent !== "undefined" &&
+    //     typeof DeviceOrientationEvent.requestPermission === "function"
+    // ) {
+    //     DeviceOrientationEvent.requestPermission()
+    //         .catch(() => {
+    //             let button = createButton("click to allow access to sensors");
+    //             button.style("font-size", "24px");
+    //             button.center();
+    //             button.mousePressed(requestAccess);
+    //             throw error;
+    //         })
+    //         .then(() => {
+    //             permissionGranted = true;
+    //         });
+    // } else {
+    //     textSize(48);
+    //     permissionGranted = true;
+    // }
 
 }
 
 function draw() {
-    if (!permissionGranted) return;
+    // if (!permissionGranted) return;
 }
 
 
-function requestAccess() {
-    DeviceOrientationEvent.requestPermission()
-      .then((response) => {
-        if (response == "granted") {
-          permissionGranted = true;
-        } else {
-          permissionGranted = false;
-        }
-      })
-      .catch(console.error);
-    this.remove();
-  }
+// function requestAccess() {
+//     DeviceOrientationEvent.requestPermission()
+//       .then((response) => {
+//         if (response == "granted") {
+//           permissionGranted = true;
+//         } else {
+//           permissionGranted = false;
+//         }
+//       })
+//       .catch(console.error);
+//     this.remove();
+// }
 
 // bind the interface
 const recBtn = document.getElementById("start_btn");
