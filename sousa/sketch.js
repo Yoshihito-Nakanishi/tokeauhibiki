@@ -7,39 +7,40 @@ var mic, recorder, player;
 var sineWave;
 
 function setup() {
+
     createCanvas(displayWidth, displayHeight);
-
-    if (/iPhone|iPad|/i.test(navigator.userAgent)) {
-        // is mobile..
-        console.log("is iOS")
+    
+    if( /iPhone|iPad|/i.test(navigator.userAgent) ) {
+      // is mobile..
+      console.log("is iOS")
     }
-
-    if (/Android/i.test(navigator.userAgent)) {
-        // is mobile..
-        console.log("is android OS")
+  
+    if( /Android/i.test(navigator.userAgent) ) {
+      // is mobile..
+      console.log("is android OS")
     }
-
+  
     cx = width / 2;
     cy = height / 2;
-
+  
     if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function"
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
     ) {
-        DeviceOrientationEvent.requestPermission()
-            .catch(() => {
-                let button = createButton("click to allow access to sensors");
-                button.style("font-size", "24px");
-                button.center();
-                button.mousePressed(requestAccess);
-                throw error;
-            })
-            .then(() => {
-                permissionGranted = true;
-            });
+      DeviceOrientationEvent.requestPermission()
+        .catch(() => {
+          let button = createButton("click to allow access to sensors");
+          button.style("font-size", "24px");
+          button.center();
+          button.mousePressed(requestAccess);
+          throw error;
+        })
+        .then(() => {
+          permissionGranted = true;
+        });
     } else {
-        textSize(48);
-        permissionGranted = true;
+      textSize(48);
+      permissionGranted = true;
     }
 
     sineWave = new p5.Oscillator('sine')
