@@ -108,12 +108,17 @@ function sensoorSelectEvent() {
 
     if(item == "揺れた"){
         currentSensor = Sensor.move;
+        player.loop = false;
     } else if (item == "振られた") {
         currentSensor = Sensor.shake;
+        player.loop = false;
     } else if (item == "ひっくり返った") {
         currentSensor = Sensor.turn;
+        player.loop = false;
     }　else if (item == "ループ再生") {
         currentSensor = Sensor.loop;
+        player.loop = true;
+        player.play();
     }
 
   }

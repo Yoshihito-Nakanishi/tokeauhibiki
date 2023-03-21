@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="jp">
 <head>
-    <body bgcolor="#464646"></body>
+    <style type="text/css">
+        .button-outline {
+            background-color:transparent;
+            width: 100;
+            height: 100px;
+            color: #FFFFFF;
+            border:none
+        }
+    </style>
+    <body bgcolor="#FFFFFF"></body>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>とけあうひびきづくり</title>
-    <button type="button" id="start_btn"> <img src="assets/rec.png" height ="100" width="100" /></button>
-    <button type="button" id="play_btn" disabled> <img src="assets/play.png" height ="100" width="100" /></button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.32/Tone.min.js"></script>
-    <script src="sketch.js"></script>
+    <button class="button-outline" onclick="window.open('miru/index.html')"> <img src="assets/button1.png" height ="100" width="100" /></button>
+    <button class="button-outline" onclick="window.open('sagasu/index.html')"><img src="assets/button2.png" height ="100" width="100" /></button>
+    <button class="button-outline" onclick="window.open('oku/index.html')"> <img src="assets/button3.png" height ="100" width="100" /></button>
 </head>
 <body>
 </body>
