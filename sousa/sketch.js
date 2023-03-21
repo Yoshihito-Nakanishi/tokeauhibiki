@@ -5,6 +5,11 @@ let cx, cy;
 initialized = false;
 var mic, recorder, player;
 var sineWave;
+var soundfile;
+
+function preload(){
+    soundfile =loadSound("sousa/assets/kick.mp3");
+}
 
 function setup() {
 
@@ -45,9 +50,17 @@ function setup() {
 
     sineWave = new p5.Oscillator('sine')
     sineWave.start();
+    setShakeThreshold(30);
 
     getAudioContext().suspend();
 
+}
+
+function deviceShaken(){
+    console.log("shaked");
+	if (!soundfile.isPlaying()){
+		soundfile.play();
+	}
 }
 
 function requestAccess() {
@@ -74,9 +87,9 @@ function draw() {
     cx += dx;
     cy += dy;
 
-    noStroke();
+    stroke(255);
     fill(0, 0, 255);
-    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 50, 50);
+    ellipse(constrain(cx, 0, windowWidth), constrain(cy, 0, windowHeight), 25, 25);
 
     sineWave.freq(map(cx, 0, displayWidth, 0, 1000));
     sineWave.amp(map(cx, 0, displayHeight, 0.0, 1.0));
